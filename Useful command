@@ -1,2 +1,3 @@
 docker rmi $(docker images -q) ## DELETE all images with
 docker rmi -f $(docker images -q) ## DELETE all images with flag force
+sudo docker-compose exec --user=send send zsh

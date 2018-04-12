@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "symfony/browser-kit": "^4.0"
+    }
+}

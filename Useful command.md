@@ -8,3 +8,5 @@
 > Path to docker-compose
 #### docker container rm $(docker container ls -a -q) 
 > Remove all containers
+#### docker inspect <container id> | grep "IPAddress"
+> To get a Docker container's IP address from the host

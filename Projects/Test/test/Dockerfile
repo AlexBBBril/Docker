@@ -59,8 +59,8 @@ ARG useruid
 
 RUN groupadd --gid $useruid test \
     && useradd --create-home --uid $useruid --gid $useruid --shell /bin/zsh test \
-    && mkdir /home/test/.ssh 
-    && touch /home/test/.ssh/config 
+    && mkdir /home/test/.ssh \
+    && touch /home/test/.ssh/config \
     && chown -R $useruid:$useruid /home/test/.ssh
     
 RUN cd /home/test && su -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" test

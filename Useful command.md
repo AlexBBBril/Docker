@@ -6,3 +6,5 @@
 > Execute manage docker-compose. For example for installing composer
 #### which docker-compose 
 > Path to docker-compose
+#### docker container rm $(docker container ls -a -q) 
+> Remove all containers

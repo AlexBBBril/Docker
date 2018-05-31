@@ -40,6 +40,12 @@
 * **docker rmi -f $(docker images -q)**
 > DELETE all images with flag force
 
+* **docker search <image_name>**
+> Search the Docker Hub for images
+```
+docker search redis:latest
+```
+
 ***
 
 

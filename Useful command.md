@@ -27,6 +27,15 @@
 * **docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)**
 > Stop and remove all docker containers
 
+* **docker run -d --name <container_name> -p <host_port>:<container_port> <image_name>**
+> Run docker container as a daemon. Setting the container name, mapping the host port to the container-port, and specify the image name 
+```
+docker run -d --name redisHostPort -p 6379:6379 redis:latest
+```
+
+* **docker port <container_name> 6379**
+> Show container port
+
 ***
 
 ### Working with images

@@ -38,7 +38,11 @@
 ```
 docker run -d --name redisHostPort -p 6379:6379 redis:latest
 ```
-
+* **docker run -d --name <container_name> -p <container_port> <image_name>**
+> To expose container on a randomly available host port
+```
+docker run -d --name redisHostPort -p 6379:6379 redis:latest
+```
 ***
 
 ### Working with images

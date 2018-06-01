@@ -34,7 +34,7 @@
 > Stop and remove all docker containers
 
 * **docker run -d --name <container_name> -p <host_port>:<container_port> <image_name>**
-> Run docker container as a daemon. Setting the container name, mapping the host port to the container-port, and specify the image name 
+> Run docker container -d to execute the container in a detached, background, state. Setting the container name, mapping the host port to the container-port, and specify the image name 
 ```
 docker run -d --name redisHostPort -p 6379:6379 redis:latest
 ```

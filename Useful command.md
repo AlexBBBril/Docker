@@ -1,5 +1,5 @@
 ### Working with containers
-
+#### Container inspect
 * **docker ps**
 > Show all running containers
 
@@ -15,6 +15,12 @@
 * **docker logs <friendly_name|container_id>**
 >  Will display messages the container has written to standard error or standard out
 
+* **docker port <container_name> 6379**
+> Show container port
+
+***
+
+#### Container management
 * **docker stop <container_id>**
 > Stop the container by its container-id
 
@@ -32,9 +38,6 @@
 ```
 docker run -d --name redisHostPort -p 6379:6379 redis:latest
 ```
-
-* **docker port <container_name> 6379**
-> Show container port
 
 ***
 

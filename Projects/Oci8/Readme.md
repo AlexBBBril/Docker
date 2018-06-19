@@ -1,6 +1,9 @@
-### PHP:7.1-fpm, NGINX, REDIS, OCI8
+### PHP:7.1-fpm, NGINX, REDIS, Oracle Instant Client 12.2
 
 #### Running docker containers in three environments: dev, test, ci.
-* **Dev-env** - Has an Xdebug.
+* **Dev-env** - Has an Xdebug. Ports is open for access.
 * **Test-env** - By default, Xdebug does't work. In debug mode, Xdebug is started
-* **CI-env** - Has an Xdebug.
+* **CI-env** - Has an Xdebug. Ports is close for access.
+
+#### Includes OCI8 php extension
+OCI8 - is extension for connection with Oracle Instant Client 12.2.

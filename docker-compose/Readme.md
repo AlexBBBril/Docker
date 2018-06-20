@@ -7,7 +7,7 @@ services:
   web:
     build:
       context: ./web
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - "./web/src:/web/src"
     ports:
@@ -20,3 +20,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
+#### Docker-compose sections description
+* context: ./web 
+> The path to the docker file in our repository, from the current directory.
+
+* dockerfile: Dockerfile
+> Name of docker file

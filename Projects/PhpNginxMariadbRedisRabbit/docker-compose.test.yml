@@ -1,0 +1,21 @@
+version: '3.5'
+## Services
+###############################################################################
+services:
+    php:
+        volumes:
+            # Логи
+            - "./docker/php/logs/:/var/logs/"
+            # Директория для временной папки
+            - "./docker/php/tmp:/tmp"
+        ports:
+            - "${EXTERNAL_SSH_PORT}:22"
+    mariadb:
+        ports:
+            - "${EXTERNAL_MYSQL_PORT}:3306"
+    redis:
+        ports:
+            - "${REDIS_PORT}:6379"
+    rabbit:
+        ports:
+            - "${RABBIT_MANAGEMENT_PORT}:15672"

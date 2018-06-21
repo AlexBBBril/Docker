@@ -1,0 +1,56 @@
+version: '3.5'
+
+## Networking
+###############################################################################
+
+# Volumes
+##############################################################################
+volumes:
+    cache_vol:
+        driver_opts:
+          type: tmpfs
+          device: tmpfs
+## Services
+###############################################################################
+services:
+    php:
+        build:
+            context: ./docker/php
+            args:
+                useruid: ${UID}
+                username: app
+            dockerfile: Dockerfile
+        depends_on:
+            - redis
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10000k"
+        working_dir: "/var/www/app/"
+#        user: app
+        hostname: "tester"
+        volumes:
+            - "./:/var/www/app/"
+            - "cache_vol:/var/www/app/var/cache"
+            # Кеш и всё всё всё для композитора
+            - "${COMPOSER_CACHE_DIR}:/home/app/.composer/cache"
+            # Конфигурация php
+            - "./docker/php/php.ini:/usr/local/etc/php/php.ini:ro"
+    mariadb:
+        build:
+            context: ./docker/mysql
+        shm_size: '300m'
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_PASSWORD: docker
+            MYSQL_USER: docker
+            MYSQL_DATABASE: send_docker
+            MYDATA: "/dev/shm/data"
+#        command: "postgres -c 'config_file=/etc/postgresql/postgresql.conf'"
+#        volumes:
+#            - "./docker/postgres/postgres.test.conf:/etc/postgresql/postgresql.conf"
+    redis:
+        image: redis:3.2
+    rabbit:
+        image: rabbitmq:3.6-management

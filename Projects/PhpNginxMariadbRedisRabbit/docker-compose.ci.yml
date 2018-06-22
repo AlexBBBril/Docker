@@ -5,11 +5,7 @@ version: '3.5'
 
 # Volumes
 ##############################################################################
-volumes:
-    cache_vol:
-        driver_opts:
-          type: tmpfs
-          device: tmpfs
+
 ## Services
 ###############################################################################
 services:
@@ -26,12 +22,13 @@ services:
             driver: "json-file"
             options:
                 max-size: "10000k"
+        environment:
+            DEBUG: ${DEBUG}
         working_dir: "/var/www/app/"
-#        user: app
+        user: app
         hostname: "tester"
         volumes:
             - "./:/var/www/app/"
-            - "cache_vol:/var/www/app/var/cache"
             # Кеш и всё всё всё для композитора
             - "${COMPOSER_CACHE_DIR}:/home/app/.composer/cache"
             # Конфигурация php
@@ -45,11 +42,8 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
             MYSQL_PASSWORD: docker
             MYSQL_USER: docker
-            MYSQL_DATABASE: send_docker
+            MYSQL_DATABASE: dbname
             MYDATA: "/dev/shm/data"
-#        command: "postgres -c 'config_file=/etc/postgresql/postgresql.conf'"
-#        volumes:
-#            - "./docker/postgres/postgres.test.conf:/etc/postgresql/postgresql.conf"
     redis:
         image: redis:3.2
     rabbit:

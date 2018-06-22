@@ -47,7 +47,7 @@ RUN docker-php-ext-install -j$(nproc) iconv curl json opcache readline intl bcma
 RUN pecl install redis-4.0.1 \
     && pecl install xdebug-2.6.0 \
     && docker-php-ext-enable redis xdebug \
-    && mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /home/$username
+    && mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.disabled
 
 ### Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -58,8 +58,8 @@ RUN chown $username:$username -R /usr/local/etc/php/conf.d/
 ### Switchable entrypoint
 COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint
 RUN chown $username:$username /usr/local/bin/docker-php-entrypoint \
-    && chmod 777 /usr/local/bin/docker-php-entrypoint
-RUN chmod +x /usr/local/bin/docker-php-entrypoint
+    && chmod 777 /usr/local/bin/docker-php-entrypoint \
+    && chmod +x /usr/local/bin/docker-php-entrypoint
 
 ### Debuggable php
 # RUN ["cp", "/usr/local/bin/php", "/usr/local/bin/php_orig"]
@@ -67,7 +67,8 @@ RUN chmod +x /usr/local/bin/docker-php-entrypoint
 #    && rm -rf /usr/local/bin/php
 COPY debuggable-php.sh /usr/local/bin/debuggable-php
 RUN chown root:staff /usr/local/bin/debuggable-php \
-    && chmod 777 /usr/local/bin/debuggable-php
+    && chmod 777 /usr/local/bin/debuggable-php \
+    && chmod +x /usr/local/bin/debuggable-php
 
 ### Install ssh
 RUN apt-get install -y openssh-server \

@@ -28,7 +28,6 @@ services:
         working_dir: "/var/www/app/"
         user: app
         hostname: "tester"
-#        entrypoint: /home/app/docker-php-entrypoint
         volumes:
             # Директория с проектом
             - "./:/var/www/app/"
@@ -71,7 +70,7 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
             MYSQL_PASSWORD: docker
             MYSQL_USER: docker
-            MYSQL_DATABASE: send_docker
+            MYSQL_DATABASE: dbname
         volumes:
             - "mariadb:/var/lib/mysql"
             - "/home/anton/:/var/data"

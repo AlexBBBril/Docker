@@ -2,10 +2,10 @@
 set -e
 
 #switch on xdebug
-enabled_xdebug="/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+disabled_xdebug="/usr/local/etc/php/conf.d/docker-php-ext-xdebug.disabled"
 if [ "${DEBUG}" = "1" ]; then
-        if [ ! -e "$enabled_xdebug" ]; then
-           mv /home/app/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/
+        if [ -e "$disabled_xdebug" ]; then
+           mv "$disabled_xdebug" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
         fi
 fi
 

@@ -12,5 +12,5 @@ It’s OK if apt-get reports that none of these packages are installed.
 The contents of /var/lib/docker/, including images, containers, volumes, and networks, are preserved. 
 The Docker CE package is now called docker-ce.
 
-#### Docker wintout sudo
+#### Docker without sudo
 > https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo

@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
 ARG username
 ARG useruid
@@ -52,13 +52,15 @@ RUN echo "/usr/lib/oracle/12.2/client64/lib" > /etc/ld.so.conf.d/oracle-instantc
 RUN docker-php-ext-install -j$(nproc) iconv curl json opcache readline intl bcmath zip xml mbstring soap \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install oci8
+    && docker-php-ext-install oci8 \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pgsql pdo_pgsql
 
 ### Pecl extensions install
 RUN pecl install redis-4.0.1 \
     && pecl install xdebug-2.6.0 \
     && docker-php-ext-enable redis xdebug \
-    && mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /home/$username
+    && mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.disabled
 
 ### Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -69,8 +71,8 @@ RUN chown $username:$username -R /usr/local/etc/php/conf.d/
 ### Switchable entrypoint
 COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint
 RUN chown $username:$username /usr/local/bin/docker-php-entrypoint \
-    && chmod 777 /usr/local/bin/docker-php-entrypoint
-RUN chmod +x /usr/local/bin/docker-php-entrypoint
+    && chmod 777 /usr/local/bin/docker-php-entrypoint \
+    && chmod +x /usr/local/bin/docker-php-entrypoint
 
 ### Debuggable php
 # RUN ["cp", "/usr/local/bin/php", "/usr/local/bin/php_orig"]
@@ -78,7 +80,8 @@ RUN chmod +x /usr/local/bin/docker-php-entrypoint
 #    && rm -rf /usr/local/bin/php
 COPY debuggable-php.sh /usr/local/bin/debuggable-php
 RUN chown root:staff /usr/local/bin/debuggable-php \
-    && chmod 777 /usr/local/bin/debuggable-php
+    && chmod 777 /usr/local/bin/debuggable-php \
+    && chmod +x /usr/local/bin/debuggable-php
 
 ### Install ssh
 RUN apt-get install -y openssh-server \

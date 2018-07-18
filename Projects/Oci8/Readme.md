@@ -1,4 +1,4 @@
-### PHP:7.1-fpm, NGINX, REDIS, Oracle Instant Client 12.2
+### PHP:7.2-fpm, NGINX, REDIS, PostgreSQL, Oracle Instant Client 12.2
 
 #### Running docker containers in three environments: dev, test, ci.
 * **Dev-env** - Has an Xdebug. Ports is open for access.

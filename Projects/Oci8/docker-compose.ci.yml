@@ -36,5 +36,17 @@ services:
             - "${COMPOSER_CACHE_DIR}:/home/app/.composer/cache"
             # Конфигурация php
             - "./docker/php/php.ini:/usr/local/etc/php/php.ini:ro"
+    postgres:
+        build:
+            context: ./docker/postgres
+        shm_size: '300m'
+        environment:
+            POSTGRES_PASSWORD: docker
+            POSTGRES_USER: docker
+            POSTGRES_DB: "database_name_docker.test"
+            PGDATA: "/dev/shm/data"
+        command: "postgres -c 'config_file=/etc/postgresql/postgresql.conf'"
+        volumes:
+            - "./docker/postgres/postgres.test.conf:/etc/postgresql/postgresql.conf"            
     redis:
         image: redis:3.2

@@ -10,6 +10,9 @@ services:
             - "./docker/php/tmp:/tmp"
         ports:
             - "${EXTERNAL_SSH_PORT}:22"
+    postgres:
+        ports:
+            - "${EXTERNAL_PGSQL_PORT}:5432"    
     redis:
         ports:
             - "${REDIS_PORT}:6379"

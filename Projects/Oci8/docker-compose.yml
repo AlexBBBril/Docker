@@ -45,6 +45,18 @@ services:
             - "./docker/php/tmp.sh:/home/app/run.sh"
         ports:
             - "${EXTERNAL_SSH_PORT}:22"
+    postgres: # 5432 - default port
+        image: postgres:9.6
+        environment:
+            POSTGRES_PASSWORD: docker
+            POSTGRES_USER: docker
+            POSTGRES_DB: "container_name-docker"
+        volumes:
+            - "postgres_vol:/var/lib/postgresql/data"
+            - "${HOME}/:/var/data"
+        ports:
+            - "5432:5432"
+        restart: always
     nginx:
         build:
             context: ./docker/nginx

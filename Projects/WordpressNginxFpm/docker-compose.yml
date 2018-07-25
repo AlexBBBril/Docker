@@ -1,0 +1,43 @@
+version: '3.1'
+
+volumes:
+    mysql: ~
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx
+      - ./wordpress:/var/www/html
+    links:
+      - wordpress
+    restart: always
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - "mysql:/var/lib/mysql"
+      - "${USER}/:/var/data"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    restart: always
+
+  wordpress:
+    image: wordpress:php7.1-fpm
+    container_name: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+    environment:
+      - WORDPRESS_DB_NAME=wordpress
+      - WORDPRESS_TABLE_PREFIX=wp_
+      - WORDPRESS_DB_HOST=mysql
+      - WORDPRESS_DB_PASSWORD=password
+    links:
+      - mysql
+    restart: always
